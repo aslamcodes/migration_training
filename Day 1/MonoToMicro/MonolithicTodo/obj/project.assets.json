@@ -4110,11 +4110,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/mohamedaslam/Projects/Migrations/Day 1/MonolithicTodoBlazor/TodoMVC.csproj",
+      "projectUniqueName": "/Users/mohamedaslam/Projects/Migrations/Day 1/MonoToMicro/MonolithicTodo/TodoMVC.csproj",
       "projectName": "TodoMVC",
-      "projectPath": "/Users/mohamedaslam/Projects/Migrations/Day 1/MonolithicTodoBlazor/TodoMVC.csproj",
+      "projectPath": "/Users/mohamedaslam/Projects/Migrations/Day 1/MonoToMicro/MonolithicTodo/TodoMVC.csproj",
       "packagesPath": "/Users/mohamedaslam/.nuget/packages/",
-      "outputPath": "/Users/mohamedaslam/Projects/Migrations/Day 1/MonolithicTodoBlazor/obj/",
+      "outputPath": "/Users/mohamedaslam/Projects/Migrations/Day 1/MonoToMicro/MonolithicTodo/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/mohamedaslam/.nuget/NuGet/NuGet.Config"

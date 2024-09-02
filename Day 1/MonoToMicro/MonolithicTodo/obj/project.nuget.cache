@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5KCTA/18Q4E=",
+  "dgSpecHash": "1QG1bhrpjKE=",
   "success": true,
-  "projectFilePath": "/Users/mohamedaslam/Projects/Migrations/Day 1/MonolithicTodoBlazor/TodoMVC.csproj",
+  "projectFilePath": "/Users/mohamedaslam/Projects/Migrations/Day 1/MonoToMicro/MonolithicTodo/TodoMVC.csproj",
   "expectedPackageFiles": [
     "/Users/mohamedaslam/.nuget/packages/azure.core/1.35.0/azure.core.1.35.0.nupkg.sha512",
     "/Users/mohamedaslam/.nuget/packages/azure.identity/1.10.3/azure.identity.1.10.3.nupkg.sha512",
