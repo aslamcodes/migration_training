@@ -1,0 +1,49 @@
+@page "/todolist"
+@using Microsoft.EntityFrameworkCore
+@using ToDoApp.Data
+@rendermode InteractiveServer
+@inject AppDbContext DbContext
+
+<PageTitle>Todo</PageTitle>
+
+<h1>Todo (@todos.Count(todo => !todo.IsCompleted))</h1>
+
+<ul>
+    @foreach (var todo in todos)
+    {
+        <li>
+            <input type="checkbox" @bind="todo.IsCompleted" @bind:after="UpdateTodo" />
+            <input @bind="todo.Description" @bind:after="UpdateTodo" />
+        </li>
+    }
+</ul>
+
+<input placeholder="Something todo" @bind="newTodo" />
+<button @onclick="AddTodo">Add todo</button>
+
+@code {
+    private List<TaskItem> todos = new();
+    private string? newTodo;
+
+    protected override async Task OnInitializedAsync()
+    {
+        todos = await DbContext.Tasks.ToListAsync();
+    }
+
+    private async Task AddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(newTodo))
+        {
+            var newTask = new TaskItem { Description = newTodo, IsCompleted = false };
+            todos.Add(newTask);
+            await DbContext.Tasks.AddAsync(newTask);
+            await DbContext.SaveChangesAsync();
+            newTodo = string.Empty;
+        }
+    }
+
+    private async Task UpdateTodo()
+    {
+        await DbContext.SaveChangesAsync();
+    }
+}
