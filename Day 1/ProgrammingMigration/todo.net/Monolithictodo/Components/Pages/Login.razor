@@ -1,0 +1,34 @@
+@page "/login"
+
+<PageTitle>Login</PageTitle>
+
+@code {
+    private string Email { get; set; }
+    private string Password { get; set; }
+
+    private void OnLogin()
+    {
+        // Handle the login logic here
+    }
+
+    private void OnForgotPassword()
+    {
+        // Handle forgot password logic here
+    }
+}
+
+<div class="form-container">
+    <form @onsubmit="OnLogin">
+        <h2>Login</h2>
+        <div class="input-group">
+            <input type="email" @bind="Email" placeholder="Email" required />
+        </div>
+        <div class="input-group">
+            <input type="password" @bind="Password" placeholder="Password" required />
+        </div>
+        <div class="actions">
+            <button type="submit">Login</button>
+            <a href="#" class="forgot-password" @onclick="OnForgotPassword">Forgot Password?</a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,154 @@
+@page "/todolist"
+@using Microsoft.EntityFrameworkCore
+@using ToDoApp.Data
+@rendermode InteractiveServer
+@inject AppDbContext DbContext
+
+<PageTitle>Todo</PageTitle>
+
+<div class="todo-container">
+    <h1>Todo (@todos.Count(todo => !todo.IsCompleted))</h1>
+
+    <ul>
+        @foreach (var todo in todos)
+        {
+            <li>
+                <label class="todo-item">
+                    <input type="checkbox" @bind="todo.IsCompleted" @bind:after="UpdateTodo" class="checkbox" />
+                    <input @bind="todo.Description" @bind:after="UpdateTodo" class="todo-description" />
+                    <button @onclick="() => DeleteTodo(todo)" class="delete-button">Delete</button>
+                </label>
+            </li>
+        }
+    </ul>
+
+    <div class="new-todo">
+        <input placeholder="Something todo" @bind="newTodo" class="todo-input" />
+        <button @onclick="AddTodo" class="add-button">Add todo</button>
+    </div>
+</div>
+
+<style>
+    .todo-container {
+        width: 300px;
+        margin: 50px auto;
+        font-family: Arial, sans-serif;
+    }
+
+    h1 {
+        font-size: 24px;
+        color: #333;
+        text-align: center;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .todo-item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .checkbox {
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .todo-description {
+        flex: 1;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .todo-description:focus {
+        outline: none;
+        border-color: #007bff;
+    }
+
+    .delete-button {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        margin-left: 10px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .delete-button:hover {
+        background-color: #c82333;
+    }
+
+    .new-todo {
+        display: flex;
+        margin-top: 20px;
+    }
+
+    .todo-input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px 0 0 5px;
+        font-size: 16px;
+    }
+
+    .add-button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .add-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+@code {
+    private List<TaskItem> todos = new();
+    private string? newTodo;
+
+    protected override async Task OnInitializedAsync()
+    {
+        todos = await DbContext.Tasks.ToListAsync();
+    }
+
+    private async Task AddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(newTodo))
+        {
+            var newTask = new TaskItem { Description = newTodo, IsCompleted = false, UserId = 1 };
+            todos.Add(newTask);
+            await DbContext.Tasks.AddAsync(newTask);
+            await DbContext.SaveChangesAsync();
+            newTodo = string.Empty;
+        }
+    }
+
+    private async Task UpdateTodo()
+    {
+        await DbContext.SaveChangesAsync();
+    }
+
+    private async Task DeleteTodo(TaskItem todo)
+    {
+        todos.Remove(todo);
+        DbContext.Tasks.Remove(todo);
+        await DbContext.SaveChangesAsync();
+    }
+}

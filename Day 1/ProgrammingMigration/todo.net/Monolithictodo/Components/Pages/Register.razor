@@ -1,0 +1,39 @@
+@page "/register"
+@using ToDoApp.Data
+@inject AppDbContext DbContext
+
+<PageTitle>Register</PageTitle>
+
+@code {
+    private string Name { get; set; }
+    private string Email { get; set; }
+    private string Password { get; set; }
+    private string ConfirmPassword { get; set; }
+
+    private async Task OnRegister()
+    {
+        await DbContext.Users.AddAsync(new User() { Email = Email, Name = Name, Password = Password });
+        await DbContext.SaveChangesAsync();
+    }
+}
+
+<div class="form-container">
+    <form @onsubmit="OnRegister">
+        <h2>Register</h2>
+        <div class="input-group">
+            <input type="text" @bind="Name" placeholder="Name" required />
+        </div>
+        <div class="input-group">
+            <input type="email" @bind="Email" placeholder="Email" required />
+        </div>
+        <div class="input-group">
+            <input type="password" @bind="Password" placeholder="Password" required />
+        </div>
+        <div class="input-group">
+            <input type="password" @bind="ConfirmPassword" placeholder="Confirm Password" required />
+        </div>
+        <div class="actions">
+            <button type="submit">Register</button>
+        </div>
+    </form>
+</div>
